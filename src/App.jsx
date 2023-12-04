@@ -17,7 +17,7 @@ function App() {
 
   function sumMethod(array) {
     const sum = array.reduce((accumulator, currentValue) => {
-      return accumulator + parseFloat(currentValue); // Use parseFloat para converter o valor para número
+      return accumulator + parseFloat(currentValue);
     }, 0);
   
     setDisplayValue(sum.toString());
@@ -56,8 +56,8 @@ function App() {
   
   function resultButton() {
     if (operator === "+") {
-      setDisplayElements([...displayElements, displayValue]); // Adiciona o último valor à lista antes da soma
-      sumMethod(displayElements.concat(displayValue)); // Concatena o último valor com a lista atual para realizar a soma
+      setDisplayElements([...displayElements, displayValue]);
+      sumMethod(displayElements.concat(displayValue)); 
       console.log("Operador +", displayElements);
     } else if (operator === "-") {
       setDisplayElements([...displayElements, displayValue]);
@@ -71,8 +71,6 @@ function App() {
       setDisplayElements([...displayElements, displayValue]);
       multiplyMethod(displayElements.concat(displayValue));
       console.log("Operador x", displayElements);
-    } else {
-      console.log("Sem operador", displayElements);
     }
   }
 
@@ -95,9 +93,7 @@ function App() {
       setDisplayElements([...displayElements, displayValue])
       setDisplayValue("");
     }
-  }
-    
-
+  }    
   return (
     <div className="bg-[#3B4664] min-h-screen flex justify-center items-center">
       <div className=" rounded-lg p-5 w-full md:w-[40%]">
