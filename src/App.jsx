@@ -130,10 +130,6 @@ function App() {
             functionButton={() => resultButton("RESULT")}
             element={"RESULT"}
           />
-          <Button
-            functionButton={() => console.log(displayElements)}
-            element={"RESULT"}
-          />
         </div>
       </div>
     </div>
