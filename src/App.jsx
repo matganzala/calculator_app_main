@@ -4,29 +4,99 @@ import Button from "./Button";
 function App() {
   const [displayValue, setDisplayValue] = useState("");
   const [displayElements, setDisplayElements] = useState([]);
+  const [operator, setOperator] = useState("");
 
-  function resultButton() {
-    if(displayValue != ""){
-      setDisplayElements([...displayElements, displayValue]);
-      setDisplayValue("");
-    }
-  }
-
-  function resetButton(){
+  function resetButton() {
     setDisplayValue("");
-    setDisplayElements([""])
-
+    setDisplayElements([]);
   }
 
-  function deleteButton(){
+  function deleteButton() {
     setDisplayValue(displayValue.slice(0, -1));
+  }
+
+  function sumMethod(array) {
+    const sum = array.reduce((accumulator, currentValue) => {
+      return accumulator + parseFloat(currentValue); // Use parseFloat para converter o valor para número
+    }, 0);
+  
+    setDisplayValue(sum.toString());
+  }
+
+  function subtractMethod(array) {
+    const initialValue = parseFloat(array[0]);
+    const restOfValues = array.slice(1);
+  
+    const result = restOfValues.reduce((accumulator, currentValue, index) => {
+      if (index % 2 === 0) {
+        return accumulator - parseFloat(currentValue);
+      } else {
+        return accumulator;
+      }
+    }, initialValue);
+  
+    setDisplayValue(result.toString());
+  }
+  
+  function divideMethod(array) {
+    const result = array.reduce((accumulator, currentValue) => {
+      return accumulator / parseFloat(currentValue);
+    });
+  
+    setDisplayValue(result.toString());
+  }
+  
+  function multiplyMethod(array) {
+    const result = array.reduce((accumulator, currentValue) => {
+      return accumulator * parseFloat(currentValue);
+    }, 1);
+  
+    setDisplayValue(result.toString());
+  }
+  
+  function resultButton() {
+    if (operator === "+") {
+      setDisplayElements([...displayElements, displayValue]); // Adiciona o último valor à lista antes da soma
+      sumMethod(displayElements.concat(displayValue)); // Concatena o último valor com a lista atual para realizar a soma
+      console.log("Operador +", displayElements);
+    } else if (operator === "-") {
+      setDisplayElements([...displayElements, displayValue]);
+      subtractMethod(displayElements.concat(displayValue));
+      console.log("Operador -", displayElements);
+    } else if (operator === "/") {
+      setDisplayElements([...displayElements, displayValue]);
+      divideMethod(displayElements.concat(displayValue));
+      console.log("Operador /", displayElements);
+    } else if (operator === "x") {
+      setDisplayElements([...displayElements, displayValue]);
+      multiplyMethod(displayElements.concat(displayValue));
+      console.log("Operador x", displayElements);
+    } else {
+      console.log("Sem operador", displayElements);
+    }
   }
 
   function handleButton(input) {
     setDisplayValue(displayValue + input);
-
+    if(input === "+" && displayValue != ""){
+      setOperator("+")
+      setDisplayElements([...displayElements, displayValue])
+      setDisplayValue("");
+    }else if(input === "x" && displayValue != ""){
+      setOperator("x")
+      setDisplayElements([...displayElements, displayValue])
+      setDisplayValue("");
+    }else if(input === "-" && displayValue != ""){
+      setOperator("-")
+      setDisplayElements([...displayElements, displayValue])
+      setDisplayValue("");
+    }else if(input === "/" && displayValue != ""){
+      setOperator("/")
+      setDisplayElements([...displayElements, displayValue])
+      setDisplayValue("");
+    }
   }
-  
+    
 
   return (
     <div className="bg-[#3B4664] min-h-screen flex justify-center items-center">
@@ -60,8 +130,14 @@ function App() {
           <Button functionButton={() => handleButton("x")} element={"x"} />
 
           <Button functionButton={() => resetButton("")} element={"RESET"} />
-          <Button functionButton={() => resultButton("RESULT")} element={"RESULT"} />
-          <Button functionButton={() => console.log(displayElements)} element={"RESULT"} />
+          <Button
+            functionButton={() => resultButton("RESULT")}
+            element={"RESULT"}
+          />
+          <Button
+            functionButton={() => console.log(displayElements)}
+            element={"RESULT"}
+          />
         </div>
       </div>
     </div>
